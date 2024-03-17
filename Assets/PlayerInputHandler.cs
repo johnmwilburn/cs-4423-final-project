@@ -31,7 +31,7 @@ public class PlayerInputHandler : MonoBehaviour
             direction += Vector3.right;
         }
 
-        playerCreature.Move(direction);
+        playerCreature.MoveCreature(direction);
 
     }
 }

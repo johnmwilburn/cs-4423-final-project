@@ -4,18 +4,39 @@ using UnityEngine;
 
 public class Creature : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 1f;
+    public float moveSpeed = 1f;
+    public GameObject body;
     private Rigidbody2D rb;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        FitBoxColliderToSprite();
     }
 
-    public void Move(Vector3 direction)
+    void FitBoxColliderToSprite()
+    {
+        // body.transform.position = Vector3.zero; // this doesnt work right, but make sure the body is at 0,0,0
+        SpriteRenderer renderer = body.GetComponent<SpriteRenderer>();
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        collider.size = new Vector2(renderer.size.x, renderer.size.y);
+        collider.offset = new Vector2(0, 0);
+    }
+
+    public void MoveCreature(Vector2 direction)
     {
         rb.velocity = direction * moveSpeed;
+    }
+
+    public void MoveCreatureToward(Vector2 target)
+    {
+        Vector3 direction = target - new Vector2(transform.position.x, transform.position.y);
+        MoveCreature(direction.normalized);
+    }
+
+    public void Stop()
+    {
+        MoveCreature(Vector3.zero);
     }
 
     // private void LaunchProjectile(InputAction.CallbackContext context)
