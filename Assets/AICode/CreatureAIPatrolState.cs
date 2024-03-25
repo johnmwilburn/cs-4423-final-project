@@ -22,8 +22,8 @@ public class CreatureAIPatrolState : CreatureAIState
 
         creatureAI.puppetCreature.MoveCreature(moveVec);
 
-        if(creatureAI.GetTarget() != null){
-            creatureAI.ChangeState(creatureAI.hugState);
+        if(creatureAI.CanSeeTarget()){
+            creatureAI.ChangeState(creatureAI.attackState);
         }
     }
 

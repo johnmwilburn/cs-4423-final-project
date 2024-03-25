@@ -5,11 +5,12 @@ using UnityEngine;
 public class CreatureAIInvestigateState : CreatureAIState
 {
     List<Vector2> path;
-    public CreatureAIInvestigateState(CreatureAI creatureAI) : base(creatureAI){}
+    public CreatureAIInvestigateState(CreatureAI creatureAI) : base(creatureAI) { }
 
     public override void BeginState()
     {
-        if(path == null){
+        if (path == null)
+        {
             path = new List<Vector2>();
         }
         creatureAI.GetTargetMoveCommand(ref path);
@@ -19,7 +20,8 @@ public class CreatureAIInvestigateState : CreatureAIState
     {
 
         //if we finished walking the path, or couldn't find one, start patrolling randomly
-        if(path.Count == 0){
+        if (path.Count == 0)
+        {
             creatureAI.ChangeState(creatureAI.patrolState);
             return;
         }
@@ -31,25 +33,19 @@ public class CreatureAIInvestigateState : CreatureAIState
         // }
 
         //if we see the target, start pursuing immediately
-        if(creatureAI.GetTarget() != null){
-            creatureAI.ChangeState(creatureAI.hugState);
+        if (creatureAI.CanSeeTarget())
+        {
+            creatureAI.ChangeState(creatureAI.attackState);
             return;
         }
 
         creatureAI.puppetCreature.MoveCreatureToward(path[0]); //move to the next stop on the path
-        if(Vector3.Distance(creatureAI.puppetCreature.transform.position,path[0]) < creatureAI.puppetCreature.moveSpeed * Time.fixedDeltaTime){
+        if (Vector3.Distance(creatureAI.puppetCreature.transform.position, path[0]) < creatureAI.puppetCreature.moveSpeed * Time.fixedDeltaTime)
+        {
             creatureAI.puppetCreature.transform.position = path[0]; //teleport to path point so we don't overshoot
             path.RemoveAt(0); //remove element
         }
 
-
-
-
-
     }
-
-
-
-
 
 }

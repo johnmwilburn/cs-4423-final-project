@@ -14,6 +14,7 @@ public class CreatureAI : MonoBehaviour
     [Header("Config")]
     public LayerMask obstaclesLayer;
     public float sightDistance = 1.5f;
+    public float attackDistance = 0.5f;
 
     [Header("Pathfinding")]
     Pathfinder<Vector2> pathfinder;
@@ -23,7 +24,7 @@ public class CreatureAI : MonoBehaviour
     // Automaton ====================================================
     CreatureAIState currentState;
     public CreatureAIIdleState idleState { get; private set; }
-    public CreatureAIHugState hugState { get; private set; }
+    public CreatureAIAttackState attackState { get; private set; }
     public CreatureAIPatrolState patrolState { get; private set; }
     public CreatureAIInvestigateState investigateState { get; private set; }
 
@@ -39,7 +40,7 @@ public class CreatureAI : MonoBehaviour
     void Start()
     {
         idleState = new CreatureAIIdleState(this);
-        hugState = new CreatureAIHugState(this);
+        attackState = new CreatureAIAttackState(this);
         patrolState = new CreatureAIPatrolState(this);
         investigateState = new CreatureAIInvestigateState(this);
         currentState = idleState;
@@ -55,12 +56,12 @@ public class CreatureAI : MonoBehaviour
         currentState.UpdateStateBase(); //work the current state
     }
 
-    public Creature GetTarget()
+    public bool CanSeeTarget()
     {
         //are we close enough?
         if (Vector3.Distance(puppetCreature.transform.position, targetCreature.transform.position) > sightDistance)
         {
-            return null;
+            return false;
         }
 
         //are we blocked by an obstacle?
@@ -86,10 +87,10 @@ public class CreatureAI : MonoBehaviour
 
         if (obstacleHit)
         {
-            return null;
+            return false;
         }
 
-        return targetCreature;
+        return true;
 
     }
 

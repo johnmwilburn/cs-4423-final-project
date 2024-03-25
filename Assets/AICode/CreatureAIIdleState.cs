@@ -17,12 +17,10 @@ public class CreatureAIIdleState : CreatureAIState
 
     public override void UpdateState()
     {
-        //don't need to do anything
         creatureAI.puppetCreature.Stop();
-        // //if beepis detects player, change to hug state
-        if (creatureAI.GetTarget() != null)
+        if (creatureAI.CanSeeTarget())
         {
-            creatureAI.ChangeState(creatureAI.hugState);
+            creatureAI.ChangeState(creatureAI.attackState);
         }
     }
 }
