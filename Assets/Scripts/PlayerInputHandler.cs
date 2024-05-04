@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] private Creature playerCreature;
-    [SerializeField] private AudioManager audioManager;
     // Update is called once per frame
     void Update()
     {
@@ -52,11 +51,6 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             playerCreature.AttackRanged(Vector3.down);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.Delete)){
-            audioManager.Play("rat_death");
         }
     }
 }

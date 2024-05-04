@@ -11,6 +11,7 @@ public class AmmoPickup : MonoBehaviour
         if (other.GetComponent<Creature>()?.creatureType == Creature.Type.Player)
         {
             other.GetComponent<Creature>().ammo += 5;
+            AudioSourceManager.Instance.PlayClip("pickup");
             Destroy(gameObject);
         }
     }

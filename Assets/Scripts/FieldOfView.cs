@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-    public LayerMask obstacles;
+    public LayerMask obstacles, objects;
     private Mesh mesh;
     private MeshFilter meshFilter;
     private Vector3 origin;
@@ -54,16 +54,16 @@ public class FieldOfView : MonoBehaviour
         int triangleIndex = 0;
         for (int i = 0; i <= rayCount; i++)
         {
+
             Vector3 vertex;
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, obstacles);
-            Debug.DrawRay(origin, GetVectorFromAngle(angle) * viewDistance);
-            if (raycastHit2D.collider == null)
+            RaycastHit2D lightingMeshHit = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, obstacles);
+            if (lightingMeshHit.collider == null)
             {
                 vertex = origin + GetVectorFromAngle(angle) * viewDistance;
             }
             else
             {
-                vertex = raycastHit2D.point;
+                vertex = lightingMeshHit.point;
             }
 
             vertices[vertexIndex] = vertex;
@@ -81,6 +81,23 @@ public class FieldOfView : MonoBehaviour
             angle -= angleIncrease;
         }
 
+        // Within calculated FOV mesh, shoot rays to identify objects to render 
+        for (int i = 1; i < rayCount; i++)
+        {
+            Vector3 destination = vertices[i];
+            Vector3 direction = destination - origin;
+            float distance = (destination - origin).sqrMagnitude;
+            RaycastHit2D objectRenderHit = Physics2D.Raycast(origin, direction, distance, objects);
+            if (objectRenderHit.collider != null)
+            {
+                GameObject objectToRender = objectRenderHit.collider.gameObject;
+                if (objectToRender.GetComponent<Creature>()?.renderer.enabled == false)
+                {
+                    objectToRender.GetComponent<Creature>().renderer.enabled = true;
+                }
+            }
+        }
+
         mesh.vertices = vertices;
         mesh.uv = uv;
         mesh.triangles = triangles;
@@ -93,6 +110,6 @@ public class FieldOfView : MonoBehaviour
 
     public void SetAimDirection(Vector3 aimDirection)
     {
-        startingAngle = (GetAngleFromVectorFloat(aimDirection) - fov / 2f + 90f ) % 360;
+        startingAngle = (GetAngleFromVectorFloat(aimDirection) - fov / 2f + 90f) % 360;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public AudioSourceManager audioSourceManager;
     public LayerMask collisionMask;
     private float moveSpeed;
     private float rotationSpeed;
@@ -29,6 +30,8 @@ public class Projectile : MonoBehaviour
         transform.localScale = new Vector3(size, size, 1f);
         transform.Rotate(Vector3.forward, Random.Range(0, 360));
         timer = 0;
+
+        AudioSourceManager.Instance.PlayClip("shoot");
     }
 
     void OnTriggerEnter2D(Collider2D other)

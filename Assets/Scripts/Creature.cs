@@ -38,6 +38,7 @@ public class Creature : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         renderer = body.GetComponent<SpriteRenderer>();
+        
         FitBoxColliderToSprite();
     }
     void Update()
@@ -48,6 +49,10 @@ public class Creature : MonoBehaviour
             playerSO.maxHealth = maxHealth;
             playerSO.ammo = ammo;
             playerSO.maxAmmo = maxAmmo;
+        }
+
+        if (creatureType == Type.Enemy){
+            renderer.enabled = false;
         }
 
         if (fieldOfView)
@@ -100,6 +105,9 @@ public class Creature : MonoBehaviour
         {
             Die();
         }
+        else {
+            AudioSourceManager.Instance.PlayClip("hit");
+        }
     }
 
     public void Die()
@@ -112,6 +120,8 @@ public class Creature : MonoBehaviour
             if (ammoPickupPrefab){
                 Instantiate(ammoPickupPrefab, transform.position, Quaternion.identity);
             }
+
+            AudioSourceManager.Instance.PlayClip("rat_death");
         }
         else if (creatureType == Type.Player)
         {
