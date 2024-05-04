@@ -8,9 +8,9 @@ using TMPro;
 public class Exit : MonoBehaviour
 {
     public MissionSO missionSO;
-    public SpriteRenderer body;
     public GameObject missionCompleteUI;
-    bool isOpen;
+    private RenderManager renderManager;
+    private bool isOpen;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -21,19 +21,10 @@ public class Exit : MonoBehaviour
         }
     }
 
-    void FitBoxColliderToSprite()
-    {
-        // body.transform.position = Vector3.zero; // this doesnt work right, but make sure the body is at 0,0,0 relative to the parent
-        SpriteRenderer renderer = body.GetComponent<SpriteRenderer>();
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        collider.size = new Vector2(renderer.size.x, renderer.size.y);
-        collider.offset = new Vector2(0, 0);
-    }
-
     void Start()
     {
-        FitBoxColliderToSprite();
-        body.color = Color.red;
+        renderManager = GetComponent<RenderManager>();
+        renderManager.SetColor(Color.red);
         isOpen = false;
     }
 
@@ -42,7 +33,7 @@ public class Exit : MonoBehaviour
     {
         if (!isOpen && missionSO.IsMissionComplete())
         {
-            body.color = Color.green;
+            renderManager.SetColor(Color.green);
             isOpen = true;
         }
     }

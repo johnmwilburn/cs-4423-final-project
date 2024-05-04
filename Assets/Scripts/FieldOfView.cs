@@ -86,14 +86,15 @@ public class FieldOfView : MonoBehaviour
         {
             Vector3 destination = vertices[i];
             Vector3 direction = destination - origin;
-            float distance = (destination - origin).sqrMagnitude;
+            // Debug.DrawRay(origin, direction);
+            float distance =  Vector3.Distance(origin, destination);
             RaycastHit2D objectRenderHit = Physics2D.Raycast(origin, direction, distance, objects);
             if (objectRenderHit.collider != null)
             {
-                GameObject objectToRender = objectRenderHit.collider.gameObject;
-                if (objectToRender.GetComponent<Creature>()?.renderer.enabled == false)
+                RenderManager rm = objectRenderHit.collider.gameObject.GetComponent<RenderManager>();
+                if ((bool)(rm?.needsIllumination))
                 {
-                    objectToRender.GetComponent<Creature>().renderer.enabled = true;
+                    rm.EnableRenderer();
                 }
             }
         }

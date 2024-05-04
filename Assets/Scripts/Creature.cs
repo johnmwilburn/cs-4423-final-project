@@ -32,14 +32,13 @@ public class Creature : MonoBehaviour
     public GameObject ammoPickupPrefab;
 
     private Rigidbody2D rb;
-    public SpriteRenderer renderer;
+    private RenderManager renderManager;
+    public Vector3 facingDirection;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        renderer = body.GetComponent<SpriteRenderer>();
-        
-        FitBoxColliderToSprite();
+        renderManager = GetComponent<RenderManager>();
     }
     void Update()
     {
@@ -51,22 +50,18 @@ public class Creature : MonoBehaviour
             playerSO.maxAmmo = maxAmmo;
         }
 
-        if (creatureType == Type.Enemy){
-            renderer.enabled = false;
+        if (creatureType == Type.Player)
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 playerPosition = new Vector3(transform.position.x, transform.position.y, 0);
+            facingDirection = mousePosition - playerPosition;
         }
 
         if (fieldOfView)
         {
             fieldOfView.SetOrigin(transform.position);
+            fieldOfView.SetAimDirection(facingDirection);
         }
-    }
-
-    void FitBoxColliderToSprite()
-    {
-        // body.transform.position = Vector3.zero; // this doesnt work right, but make sure the body is at 0,0,0 relative to the parent
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        collider.size = new Vector2(renderer.size.x, renderer.size.y);
-        collider.offset = new Vector2(0, 0);
     }
 
     public void MoveCreature(Vector2 direction)
@@ -82,12 +77,6 @@ public class Creature : MonoBehaviour
 
     public void AttackRanged(Vector3 direction)
     {
-
-        if (creatureType == Type.Player && fieldOfView)
-        {
-            fieldOfView.SetAimDirection(direction);
-        }
-
         if (ammo > 0)
         {
             ammo--;
@@ -105,7 +94,8 @@ public class Creature : MonoBehaviour
         {
             Die();
         }
-        else {
+        else
+        {
             AudioSourceManager.Instance.PlayClip("hit");
         }
     }
@@ -117,7 +107,8 @@ public class Creature : MonoBehaviour
             missionSO.IncrementEnemiesKilled();
             Destroy(gameObject);
 
-            if (ammoPickupPrefab){
+            if (ammoPickupPrefab)
+            {
                 Instantiate(ammoPickupPrefab, transform.position, Quaternion.identity);
             }
 

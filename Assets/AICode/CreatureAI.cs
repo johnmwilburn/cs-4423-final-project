@@ -9,7 +9,7 @@ public class CreatureAI : MonoBehaviour
     // Blackboard ====================================================
     public Creature puppetCreature;
     public Creature targetCreature;
-    private SpriteRenderer puppetSpriteRenderer;
+    private RenderManager puppetRenderManager;
 
     [Header("Config")]
     public LayerMask obstaclesLayer;
@@ -46,8 +46,7 @@ public class CreatureAI : MonoBehaviour
         currentState = idleState;
 
         pathfinder = new Pathfinder<Vector2>(GetDistance, GetNeighbourNodes, 1000);
-
-        puppetSpriteRenderer = puppetCreature.body.GetComponent<SpriteRenderer>();
+        puppetRenderManager = puppetCreature.GetComponent<RenderManager>();
     }
 
 
@@ -65,7 +64,7 @@ public class CreatureAI : MonoBehaviour
         }
 
         //are we blocked by an obstacle?
-        Bounds spriteBounds = puppetSpriteRenderer.bounds;
+        Bounds spriteBounds = puppetRenderManager.GetRenderer().bounds;
 
         Vector2[] corners = new Vector2[4];
         corners[0] = new Vector2(spriteBounds.max.x + 0.01f, spriteBounds.min.y - 0.01f);
@@ -96,7 +95,7 @@ public class CreatureAI : MonoBehaviour
 
     public void SetColor(Color c)
     {
-        puppetCreature.body.GetComponent<SpriteRenderer>().color = c;
+        puppetCreature.GetComponent<RenderManager>().SetColor(c);
     }
 
     //pathfinding
@@ -116,7 +115,7 @@ public class CreatureAI : MonoBehaviour
 
                 Vector2 dir = new Vector2(i, j) * gridSize;
 
-                Bounds spriteBounds = puppetSpriteRenderer.bounds;
+                Bounds spriteBounds = puppetRenderManager.GetRenderer().bounds;
 
                 Vector2[] corners = new Vector2[4];
                 corners[0] = new Vector2(spriteBounds.max.x, spriteBounds.min.y);
@@ -156,7 +155,7 @@ public class CreatureAI : MonoBehaviour
     //find the closest spot on the grid to begin our pathfinding adventure
     Vector2 GetClosestNode(Vector2 target)
     {
-        Debug.DrawLine(target, target + Vector2.up * 0.01f, Color.red, 30f);
+        // Debug.DrawLine(target, target + Vector2.up * 0.01f, Color.red, 30f);
         return new Vector2(Mathf.Round(target.x / gridSize) * gridSize, Mathf.Round(target.y / gridSize) * gridSize);
     }
 

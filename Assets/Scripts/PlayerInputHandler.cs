@@ -32,25 +32,10 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         playerCreature.MoveCreature(direction);
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            playerCreature.AttackRanged(Vector3.right);
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            playerCreature.AttackRanged(Vector3.left);
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            playerCreature.AttackRanged(Vector3.up);
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            playerCreature.AttackRanged(Vector3.down);
+            playerCreature.AttackRanged(playerCreature.facingDirection);
         }
     }
 }
