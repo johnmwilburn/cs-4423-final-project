@@ -32,6 +32,6 @@ public class MissionSO : ScriptableObject
 
     public bool IsMissionComplete()
     {
-        return numEnemiesKilled >= numEnemies && numPickupsCollected >= numPickups;
+        return numEnemiesKilled >= numEnemies;
     }
 }

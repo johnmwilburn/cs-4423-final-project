@@ -7,8 +7,8 @@ public class CreatureAI : MonoBehaviour
 {
 
     // Blackboard ====================================================
-    public Creature puppetCreature;
-    public Creature targetCreature;
+    public CreatureEnemy puppetCreature;
+    public CreaturePlayer targetCreature;
     private RenderManager puppetRenderManager;
 
     [Header("Config")]

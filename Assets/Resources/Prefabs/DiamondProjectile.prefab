@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96d5937ba400331438e06e94a72140da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSourceManager: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 8

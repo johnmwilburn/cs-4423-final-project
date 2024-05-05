@@ -7,17 +7,17 @@ public class RenderManager : MonoBehaviour
     private new BoxCollider2D collider;
     private new SpriteRenderer renderer;
 
-    public bool needsIllumination;
+    public bool needsIllumination = true;
+    public bool constrainColliderToRenderer = true;
 
-    void Start()
+    void Awake()
     {
         renderer = GetComponent<SpriteRenderer>();
         collider = GetComponent<BoxCollider2D>();
-        if (renderer && collider)
+        if (constrainColliderToRenderer)
         {
             FitBoxColliderToSprite();
         }
-
     }
 
     void Update()

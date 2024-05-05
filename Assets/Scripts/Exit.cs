@@ -14,7 +14,7 @@ public class Exit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isOpen && other.GetComponent<Creature>()?.creatureType == Creature.Type.Player)
+        if (isOpen && other.GetComponent<CreaturePlayer>())
         {
             Debug.Log("Player has reached the exit!");
             missionCompleteUI.SetActive(true);

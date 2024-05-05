@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XInput;
 
-public class Creature : MonoBehaviour
+public abstract class Creature : MonoBehaviour
 {
-    public enum Type { Player, Enemy };
-
     [Header("Creature Stats")]
-    public Type creatureType = Type.Enemy;
     public float moveSpeed = 1f;
     public int health = 5;
     public int maxHealth = 5;
     public int ammo = 5;
-    public int maxAmmo = 5;
+    public int maxAmmo = 10;
     public int attackDamage = 1;
 
     [Header("Projectile Config")]
@@ -22,46 +19,16 @@ public class Creature : MonoBehaviour
     public float projectileRotationSpeed = 100f;
     public float projectileSize = 0.5f;
     public float projectileTTL = 5f;
-
-    [Header("Functional References")]
-    public MissionSO missionSO;
-    public PlayerSO playerSO;
-    public GameObject body;
-    public FieldOfView fieldOfView;
-    public LayerMask lightMask;
-    public GameObject ammoPickupPrefab;
+    public Projectile.Type projectileType;
 
     private Rigidbody2D rb;
-    private RenderManager renderManager;
-    public Vector3 facingDirection;
+    
 
-    void Awake()
+    public abstract void Die();
+
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        renderManager = GetComponent<RenderManager>();
-    }
-    void Update()
-    {
-        if (creatureType == Type.Player && playerSO != null)
-        {
-            playerSO.health = health;
-            playerSO.maxHealth = maxHealth;
-            playerSO.ammo = ammo;
-            playerSO.maxAmmo = maxAmmo;
-        }
-
-        if (creatureType == Type.Player)
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 playerPosition = new Vector3(transform.position.x, transform.position.y, 0);
-            facingDirection = mousePosition - playerPosition;
-        }
-
-        if (fieldOfView)
-        {
-            fieldOfView.SetOrigin(transform.position);
-            fieldOfView.SetAimDirection(facingDirection);
-        }
     }
 
     public void MoveCreature(Vector2 direction)
@@ -83,7 +50,7 @@ public class Creature : MonoBehaviour
 
             GameObject obj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Projectile projectile = obj.GetComponent<Projectile>();
-            projectile.Setup(direction, creatureType, projectileSpeed, projectileRotationSpeed, projectileSize, attackDamage, projectileTTL);
+            projectile.Setup(direction, projectileType, projectileSpeed, projectileRotationSpeed, projectileSize, attackDamage, projectileTTL);
         }
     }
 
@@ -93,30 +60,6 @@ public class Creature : MonoBehaviour
         if (health <= 0)
         {
             Die();
-        }
-        else
-        {
-            AudioSourceManager.Instance.PlayClip("hit");
-        }
-    }
-
-    public void Die()
-    {
-        if (creatureType == Type.Enemy)
-        {
-            missionSO.IncrementEnemiesKilled();
-            Destroy(gameObject);
-
-            if (ammoPickupPrefab)
-            {
-                Instantiate(ammoPickupPrefab, transform.position, Quaternion.identity);
-            }
-
-            AudioSourceManager.Instance.PlayClip("rat_death");
-        }
-        else if (creatureType == Type.Player)
-        {
-            // missionSO.FailMission();
         }
     }
 

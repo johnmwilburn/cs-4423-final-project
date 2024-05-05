@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    [SerializeField] private Creature playerCreature;
-    // Update is called once per frame
+    [SerializeField] private CreaturePlayer playerCreature;
+    [SerializeField] private FieldOfView fov;
     void Update()
     {
-
         Vector3 direction = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -32,10 +31,15 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         playerCreature.MoveCreature(direction);
-        
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 playerPosition = new Vector3(playerCreature.transform.position.x, playerCreature.transform.position.y, 0);
+        Vector3 facingDirection = mousePosition - playerPosition;
+        fov.SetAimDirection(facingDirection);
+
         if (Input.GetMouseButtonDown(0))
         {
-            playerCreature.AttackRanged(playerCreature.facingDirection);
+            playerCreature.AttackRanged(facingDirection);
         }
     }
 }

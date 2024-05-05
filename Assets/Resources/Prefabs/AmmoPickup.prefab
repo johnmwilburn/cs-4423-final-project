@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6830796803813835452}
   - component: {fileID: 3579924434211298612}
   - component: {fileID: 9193327459870737386}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AmmoPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needsIllumination: 1
+  constrainColliderToRenderer: 1
 --- !u!61 &3579924434211298612
 BoxCollider2D:
   m_ObjectHideFlags: 0

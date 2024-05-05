@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public enum Type { Player, Enemy };
     public AudioSourceManager audioSourceManager;
-    public LayerMask collisionMask;
     private float moveSpeed;
     private float rotationSpeed;
     private float ttl;
@@ -14,12 +15,12 @@ public class Projectile : MonoBehaviour
     private float size;
     private Vector3 direction;
     private Rigidbody2D rb;
-    private Creature.Type projectileType;
+    private Type sourceType;
 
-    public void Setup(Vector3 direction, Creature.Type type, float moveSpeed, float rotationSpeed, float size, int damage, float ttl)
+    public void Setup(Vector3 direction, Type type, float moveSpeed, float rotationSpeed, float size, int damage, float ttl)
     {
+
         this.direction = direction;
-        this.projectileType = type;
         this.moveSpeed = moveSpeed;
         this.rotationSpeed = rotationSpeed;
         this.size = size;
@@ -36,16 +37,25 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<Creature>()?.creatureType == projectileType)
+        if (other.gameObject.tag != "ProjectileHits")
         {
             return;
         }
 
-        other.gameObject.GetComponent<Creature>()?.TakeDamage(damage);
-        if (!other.gameObject.GetComponent<Projectile>())
+        Creature targetCreature = other.gameObject.GetComponent<Creature>();
+
+        if (targetCreature?.projectileType == sourceType)
         {
-            Destroy(gameObject);
+            return;
         }
+
+        if (targetCreature)
+        {
+            targetCreature.TakeDamage(damage);
+        }
+
+        AudioSourceManager.Instance.PlayClip("hit");
+        Destroy(gameObject);
     }
 
     void Update()
@@ -56,10 +66,8 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Move the projectile
         rb.velocity = direction * moveSpeed;
 
-        // Rotate the projectile
         transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
     }
 }
