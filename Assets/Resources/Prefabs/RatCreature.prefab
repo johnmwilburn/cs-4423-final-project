@@ -9,12 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9072872544202274875}
-  - component: {fileID: 2044139204123794089}
+  - component: {fileID: 8192467522030929799}
+  - component: {fileID: 5441485562828059770}
   - component: {fileID: 3057290820096756571}
   - component: {fileID: 1671884178795823952}
-  m_Layer: 0
+  - component: {fileID: 7149111984257192697}
+  - component: {fileID: 2523734458046781638}
+  m_Layer: 7
   m_Name: RatCreature
-  m_TagString: Untagged
+  m_TagString: ProjectileHits
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,16 +30,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7005213787368281136}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.719, y: 4.239, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3923962744431125453}
-  - {fileID: 2949642823620722095}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2044139204123794089
+--- !u!114 &8192467522030929799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,30 +47,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 7005213787368281136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0872d3578f92014aabbfe0cec0e3db8, type: 3}
+  m_Script: {fileID: 11500000, guid: ddf6f05ea053dca58a4f8e0c44d25e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureType: 1
-  moveSpeed: 0.75
+  moveSpeed: 1
   health: 5
   maxHealth: 5
   ammo: 5
   maxAmmo: 5
   attackDamage: 1
   projectilePrefab: {fileID: 11065283571788739, guid: 347238b98ff3e1a4998df6742c63e3d2, type: 3}
-  projectileSpeed: 2
+  projectileSpeed: 1
   projectileRotationSpeed: 100
   projectileSize: 0.5
   projectileTTL: 5
+  projectileType: 1
   missionSO: {fileID: 11400000, guid: f0498d325e775954e83bd6b219020847, type: 2}
-  playerSO: {fileID: 0}
-  body: {fileID: 7154258044223971687}
-  fieldOfView: {fileID: 0}
-  lightMask:
-    serializedVersion: 2
-    m_Bits: 0
   ammoPickupPrefab: {fileID: 1563222977888076583, guid: 2d11e4e3c1868f846be075b75c0d41df, type: 3}
-  renderer: {fileID: 0}
+--- !u!114 &5441485562828059770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7005213787368281136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a50dbdd35fbfec08bcd8e721d665db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needsIllumination: 1
+  constrainColliderToRenderer: 1
 --- !u!50 &3057290820096756571
 Rigidbody2D:
   serializedVersion: 4
@@ -131,55 +140,37 @@ BoxCollider2D:
   m_Offset: {x: 0.004556462, y: 0.001139164}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.08869019, y: 0.16843033}
   m_EdgeRadius: 0
---- !u!1 &7154258044223971687
-GameObject:
+--- !u!114 &7149111984257192697
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2949642823620722095}
-  - component: {fileID: 571183849472749932}
-  m_Layer: 0
-  m_Name: Body
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2949642823620722095
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7154258044223971687}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9072872544202274875}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &571183849472749932
+  m_GameObject: {fileID: 7005213787368281136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a50dbdd35fbfec08bcd8e721d665db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needsIllumination: 1
+  constrainColliderToRenderer: 1
+--- !u!212 &2523734458046781638
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7154258044223971687}
+  m_GameObject: {fileID: 7005213787368281136}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -280,7 +271,7 @@ PrefabInstance:
     - target: {fileID: 6237999285697842849, guid: 187f805c34c8c71408b5b2313ca6563e, type: 3}
       propertyPath: puppetCreature
       value: 
-      objectReference: {fileID: 2044139204123794089}
+      objectReference: {fileID: 8192467522030929799}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

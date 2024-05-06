@@ -15,12 +15,13 @@ public class Projectile : MonoBehaviour
     private float size;
     private Vector3 direction;
     private Rigidbody2D rb;
-    private Type sourceType;
+    private Type type;
 
     public void Setup(Vector3 direction, Type type, float moveSpeed, float rotationSpeed, float size, int damage, float ttl)
     {
 
         this.direction = direction;
+        this.type = type;
         this.moveSpeed = moveSpeed;
         this.rotationSpeed = rotationSpeed;
         this.size = size;
@@ -44,7 +45,7 @@ public class Projectile : MonoBehaviour
 
         Creature targetCreature = other.gameObject.GetComponent<Creature>();
 
-        if (targetCreature?.projectileType == sourceType)
+        if (targetCreature?.projectileType == type)
         {
             return;
         }
