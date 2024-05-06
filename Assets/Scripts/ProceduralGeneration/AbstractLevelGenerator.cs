@@ -10,11 +10,12 @@ public abstract class AbstractLevelGenerator : MonoBehaviour
     [SerializeField]
     protected Vector2Int startPosition = Vector2Int.zero;
 
-    public void GenerateLevel()
+    public HashSet<Vector2Int> GenerateLevel()
     {
         tilemapVisualizer.ClearTilemaps();
-        RunProceduralGeneration();
+        HashSet<Vector2Int> floorPositions = RunProceduralGeneration();
+        return floorPositions;
     }
 
-    protected abstract void RunProceduralGeneration();
+    protected abstract HashSet<Vector2Int> RunProceduralGeneration();
 }

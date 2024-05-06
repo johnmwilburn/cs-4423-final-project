@@ -9,7 +9,7 @@ public class SimpleRandomWalkLevelGenerator : AbstractLevelGenerator
     [SerializeField]
     protected SimpleRandomWalkSO randomWalkParameters;
 
-    protected override void RunProceduralGeneration()
+    protected override HashSet<Vector2Int> RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions;
         RunSimpleRandomWalk(out floorPositions, randomWalkParameters, startPosition);
@@ -19,6 +19,8 @@ public class SimpleRandomWalkLevelGenerator : AbstractLevelGenerator
 
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         tilemapVisualizer.PaintWallTiles(wallPositions);
+
+        return floorPositions;
     }
 
     public void RunSimpleRandomWalk(out HashSet<Vector2Int> floorPositions, SimpleRandomWalkSO parameters, Vector2Int startPosition)

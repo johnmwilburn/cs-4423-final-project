@@ -13,7 +13,7 @@ public class CorridorFirstLevelGenerator : SimpleRandomWalkLevelGenerator
     [Range(0.001f, 1)]
     private float roomPercent;
 
-    protected override void RunProceduralGeneration()
+    protected override HashSet<Vector2Int> RunProceduralGeneration()
     {
         // Initialize floor position hash set 
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
@@ -49,6 +49,8 @@ public class CorridorFirstLevelGenerator : SimpleRandomWalkLevelGenerator
         // Paint floors and walls onto tilemap
         tilemapVisualizer.PaintFloorTiles(floorPositions);
         tilemapVisualizer.PaintWallTiles(wallPositions);
+
+        return floorPositions;
     }
 
     private void GenerateCorridors(out HashSet<Vector2Int> floorPositions, out HashSet<Vector2Int> corridorCornerPositions, int numIterations, bool randomizeStartLoc)
