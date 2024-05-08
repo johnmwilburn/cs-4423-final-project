@@ -42,7 +42,7 @@ public class ScreenFader : MonoBehaviour
             while(timer < fadeTime){
                 yield return null;
                 timer+=Time.deltaTime;
-                fadeImage.color = new Color(fadeColor.r,fadeColor.g,fadeColor.b, (timer/fadeTime));
+                fadeImage.color = new Color(fadeColor.r,fadeColor.g,fadeColor.b, timer/fadeTime);
 
             }
             fadeImage.color = fadeColor;

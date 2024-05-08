@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 
 
 public class Exit : MonoBehaviour
 {
-    public MissionSO missionSO;
-    public GameObject missionCompleteUI;
+    [SerializeField] private MissionSO missionSO;
+    public ScreenFader screenFader;
     private RenderManager renderManager;
     private bool isOpen;
 
@@ -17,7 +16,7 @@ public class Exit : MonoBehaviour
         if (isOpen && other.GetComponent<CreaturePlayer>())
         {
             Debug.Log("Player has reached the exit!");
-            missionCompleteUI.SetActive(true);
+            screenFader.FadeToColor("PostGame");
         }
     }
 

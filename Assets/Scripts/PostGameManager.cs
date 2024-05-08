@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuHandler : MonoBehaviour
+public class PostGameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Functional References")]
     [SerializeField] private ScreenFader screenFader;
 
-    public void Play(){
+    public void Continue()
+    {
         screenFader.FadeToColor("SampleScene");
     }
 
-    public void Quit(){
-        Application.Quit();
+    public void MainMenu()
+    {
+        screenFader.FadeToColor("MainMenu");
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MissionSO
   m_EditorClassIdentifier: 
   numEnemies: 2
-  numEnemiesKilled: 4
-  numPickups: 0
+  numEnemiesKilled: 2
+  numPickups: 2
   numPickupsCollected: 0

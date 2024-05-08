@@ -49,6 +49,16 @@ public class AudioSourceManager : MonoBehaviour
         PopulateStringClipMap();
     }
 
+    private void PopulateStringClipMap()
+    {
+        stringClipMap = new Dictionary<string, AudioClip>();
+
+        foreach (var namedAudioClip in namedAudioClips)
+        {
+            stringClipMap.Add(namedAudioClip.name, namedAudioClip.clip);
+        }
+    }
+
     private void InitializeAudioSourcePool()
     {
         audioSourcePool = new AudioSourcePoolEntry[audioSourcePoolSize];
@@ -62,16 +72,6 @@ public class AudioSourceManager : MonoBehaviour
                 timeStartedPlaying = 0,
                 poolIndex = i
             };
-        }
-    }
-
-    private void PopulateStringClipMap()
-    {
-        stringClipMap = new Dictionary<string, AudioClip>();
-
-        foreach (var namedAudioClip in namedAudioClips)
-        {
-            stringClipMap.Add(namedAudioClip.name, namedAudioClip.clip);
         }
     }
 

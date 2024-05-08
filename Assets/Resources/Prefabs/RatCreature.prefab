@@ -51,15 +51,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  health: 5
-  maxHealth: 5
+  health: 1
+  maxHealth: 1
   ammo: 5
   maxAmmo: 5
   attackDamage: 1
   projectilePrefab: {fileID: 11065283571788739, guid: 347238b98ff3e1a4998df6742c63e3d2, type: 3}
   projectileSpeed: 1
   projectileRotationSpeed: 100
-  projectileSize: 0.5
+  projectileSize: 0.08
   projectileTTL: 5
   projectileType: 1
   missionSO: {fileID: 11400000, guid: f0498d325e775954e83bd6b219020847, type: 2}
@@ -267,6 +267,14 @@ PrefabInstance:
     - target: {fileID: 3922023426525339313, guid: 187f805c34c8c71408b5b2313ca6563e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237999285697842849, guid: 187f805c34c8c71408b5b2313ca6563e, type: 3}
+      propertyPath: sightDistance
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237999285697842849, guid: 187f805c34c8c71408b5b2313ca6563e, type: 3}
+      propertyPath: attackDistance
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 6237999285697842849, guid: 187f805c34c8c71408b5b2313ca6563e, type: 3}
       propertyPath: puppetCreature

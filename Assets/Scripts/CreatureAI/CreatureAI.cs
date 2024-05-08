@@ -14,7 +14,7 @@ public class CreatureAI : MonoBehaviour
     [Header("Config")]
     public LayerMask obstaclesLayer;
     public float sightDistance = 1.5f;
-    public float attackDistance = 0.5f;
+    public float attackDistance = 0.08f;
 
     [Header("Pathfinding")]
     Pathfinder<Vector2> pathfinder;

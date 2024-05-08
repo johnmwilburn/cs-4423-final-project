@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XInput;
 
+
 public abstract class Creature : MonoBehaviour
 {
     [Header("Creature Stats")]
@@ -54,13 +55,22 @@ public abstract class Creature : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void AttackMelee(Creature targetCreature){
+        AudioSourceManager.Instance.PlayClip("hit");
+        targetCreature.TakeDamage(attackDamage);
+    }
+
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;
         if (health <= 0)
         {
             Die();
         }
+    }
+
+    public void AddAmmo(int amount){
+        ammo = Mathf.Clamp(ammo + amount, 0, maxAmmo);
     }
 
     public void Stop()

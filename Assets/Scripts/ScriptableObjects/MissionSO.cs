@@ -22,7 +22,7 @@ public class MissionSO : ScriptableObject
 
     public void IncrementEnemiesKilled()
     {
-        numEnemiesKilled++;
+        numEnemiesKilled = Mathf.Clamp(numEnemiesKilled + 1, 0, numEnemies);
     }
 
     public void IncrementPickupsCollected()
